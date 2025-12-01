@@ -1,0 +1,58 @@
+meta:
+  template_id: rh-project-plan-template
+  name: "Implementation Project Plan – Red Hat IT Architecture"
+  version: 0.1.0
+
+sections:
+  - id: 1-overview
+    title: "1. Project Overview"
+    prompt: |
+      Summarize:
+      - Objectives
+      - Major milestones
+      - Success criteria
+
+  - id: 2-wbs
+    title: "2. Work Breakdown Structure (WBS)"
+    prompt: |
+      Provide:
+      - Hierarchical breakdown of work packages
+      - Mapping to roles and skills
+
+  - id: 3-milestones
+    title: "3. Milestones and Deliverables"
+    prompt: |
+      List:
+      - Milestone name
+      - Target date or timeframe
+      - Entry / exit criteria
+      - Owner
+
+  - id: 4-dependencies
+    title: "4. Dependencies"
+    prompt: |
+      Capture:
+      - Internal dependencies (other projects, infra, security reviews)
+      - External dependencies (vendors, 3rd-party systems)
+
+  - id: 5-risks
+    title: "5. Risks and Mitigations"
+    prompt: |
+      Provide a risk register:
+      - Risk, impact, probability, mitigation, owner
+
+  - id: 6-comms
+    title: "6. Communication and Governance"
+    prompt: |
+      Define:
+      - Steering committee / governance bodies
+      - Meeting cadence
+      - Reporting format
+
+  - id: 7-acceptance
+    title: "7. Acceptance and Handover"
+    prompt: |
+      Describe:
+      - Acceptance criteria
+      - Handover to operations
+      - Documentation and training requirements.

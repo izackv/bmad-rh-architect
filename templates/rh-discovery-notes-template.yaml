@@ -1,0 +1,37 @@
+meta:
+  template_id: rh-discovery-notes-template
+  name: "Discovery Session Notes – Red Hat IT Architecture"
+  version: 0.1.0
+
+sections:
+  - id: 1-participants
+    title: "1. Participants and Roles"
+    prompt: "List participants, roles, and responsibilities."
+
+  - id: 2-current-state
+    title: "2. Current State Overview"
+    prompt: |
+      Describe current landscape:
+      - Existing systems (with platforms if known)
+      - Pain points
+      - Constraints (tech, process, org)
+
+  - id: 3-goals
+    title: "3. Business Goals and Drivers"
+    prompt: "Capture key goals, drivers, and success measures."
+
+  - id: 4-requirements
+    title: "4. Requirements (Functional & Non-Functional)"
+    prompt: "Bullet-point list of requirements, grouped by theme."
+
+  - id: 5-constraints
+    title: "5. Constraints and Assumptions"
+    prompt: "Document any known constraints, assumptions and unknowns."
+
+  - id: 6-opportunities
+    title: "6. Opportunities / Quick Wins"
+    prompt: "List potential quick wins or incremental improvements."
+
+  - id: 7-next-steps
+    title: "7. Next Steps"
+    prompt: "Actions, owners, and target dates after discovery."

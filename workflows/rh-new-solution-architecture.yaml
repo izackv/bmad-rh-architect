@@ -1,0 +1,36 @@
+name: rh-new-solution-architecture
+description: >
+  End-to-end workflow for designing a new solution on Red Hat platforms:
+  from discovery through HLD/LLD to cost, timeline and project plan.
+
+entry_agent: rh-it-architect
+
+steps:
+  - id: discovery
+    agent: rh-it-architect
+    task: rh-discovery-session
+
+  - id: hld
+    depends_on: [discovery]
+    agent: rh-it-architect
+    task: rh-create-hld
+
+  - id: lld
+    depends_on: [hld]
+    agent: rh-it-architect
+    task: rh-create-lld
+
+  - id: costs
+    depends_on: [hld]
+    agent: rh-it-architect
+    task: rh-estimate-costs
+
+  - id: timeline
+    depends_on: [hld]
+    agent: rh-it-architect
+    task: rh-estimate-timeline-resources
+
+  - id: project-plan
+    depends_on: [lld, costs, timeline]
+    agent: rh-it-architect
+    task: rh-create-project-plan

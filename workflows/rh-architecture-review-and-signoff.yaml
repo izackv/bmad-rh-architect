@@ -1,0 +1,34 @@
+name: rh-architecture-review-and-signoff
+description: >
+  Workflow to refine HLD/LLD and reach architecture sign-off.
+
+entry_agent: rh-it-architect
+
+steps:
+  - id: review-hld
+    agent: rh-it-architect
+    checklist: rh-hld-review-checklist
+    description: "Review HLD against the checklist and capture gaps."
+
+  - id: update-hld
+    depends_on: [review-hld]
+    agent: rh-it-architect
+    task: rh-create-hld
+    description: "Update HLD to address review findings."
+
+  - id: review-lld
+    agent: rh-it-architect
+    checklist: rh-lld-review-checklist
+    description: "Review LLD against the checklist and capture gaps."
+
+  - id: update-lld
+    depends_on: [review-lld]
+    agent: rh-it-architect
+    task: rh-create-lld
+    description: "Update LLD to address review findings."
+
+  - id: readiness-check
+    depends_on: [update-hld, update-lld]
+    agent: rh-it-architect
+    checklist: rh-redhat-platform-readiness-checklist
+    description: "Confirm the platform is ready for implementation sign-off."

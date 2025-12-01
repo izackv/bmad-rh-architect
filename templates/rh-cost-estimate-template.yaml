@@ -1,0 +1,58 @@
+meta:
+  template_id: rh-cost-estimate-template
+  name: "Cost Estimate – Red Hat IT Architecture"
+  version: 0.1.0
+  owner_role: "IT Architect / PM"
+  audience:
+    - Management
+    - Finance
+    - Procurement
+
+sections:
+  - id: 1-scope
+    title: "1. Scope of Estimate"
+    prompt: |
+      Clarify:
+      - What is included (infrastructure, software, Red Hat subscriptions, services)
+      - What is excluded (internal labour, external integrations, etc.)
+      - Currencies and assumptions (e.g. 1-year / 3-year horizon)
+
+  - id: 2-bom
+    title: "2. Bill of Materials (BOM)"
+    prompt: |
+      Produce a table with:
+      - Item category (compute, storage, network, RH subscription, tooling)
+      - Description
+      - Quantity / unit
+      - Unit cost
+      - Extended cost
+      - Notes / assumptions
+
+  - id: 3-recurring-vs-oneoff
+    title: "3. One-Off vs Recurring Costs"
+    prompt: |
+      Split:
+      - One-off (setup, PoC hardware, migration)
+      - Recurring (subscriptions, cloud resources, support)
+
+  - id: 4-scenarios
+    title: "4. Cost Scenarios"
+    prompt: |
+      Optional but recommended:
+      - Minimum / base / high scenario
+      - Sensitivity to usage growth or scaling
+
+  - id: 5-risk-contingency
+    title: "5. Risk and Contingency"
+    prompt: |
+      Identify:
+      - Cost risks (FX, license changes, cloud pricing)
+      - Recommended contingency buffer (% and rationale)
+
+  - id: 6-summary
+    title: "6. Summary and Recommendation"
+    prompt: |
+      Provide:
+      - High-level totals per scenario
+      - Key cost drivers
+      - Recommendation for management decision.

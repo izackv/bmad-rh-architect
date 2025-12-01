@@ -1,0 +1,56 @@
+meta:
+  template_id: rh-timeline-resources-template
+  name: "Timeline and Resource Estimate – Red Hat IT Architecture"
+  version: 0.1.0
+
+sections:
+  - id: 1-approach
+    title: "1. Estimation Approach"
+    prompt: |
+      Describe:
+      - Method (T-shirt sizing, bottom-up WBS, analogous)
+      - Dependencies on other teams/initiatives
+
+  - id: 2-phases
+    title: "2. Project Phases"
+    prompt: |
+      Break down:
+      - Discovery
+      - HLD/LLD
+      - Build / configuration / infra setup
+      - Testing (functional, NFR, security)
+      - Cutover / go-live
+      - Hypercare and handover
+
+  - id: 3-effort-estimate
+    title: "3. Effort Estimate (Person-Days)"
+    prompt: |
+      Provide a table:
+      - Phase
+      - Role (architect, platform engineer, dev, QA, security, PM)
+      - Person-days
+      - Assumptions
+
+  - id: 4-schedule
+    title: "4. Schedule (Calendar Time)"
+    prompt: |
+      Translate effort into timeline:
+      - Start/end per phase
+      - Overlaps and parallelism
+      - Critical path notes
+
+  - id: 5-risk-buffer
+    title: "5. Buffers and Risks"
+    prompt: |
+      Document:
+      - Risk items that impact schedule
+      - Buffer recommendations
+      - Impact of delay in upstream dependencies
+
+  - id: 6-summary
+    title: "6. Summary"
+    prompt: |
+      Provide a high-level narrative:
+      - Total effort
+      - Indicative timeline
+      - Key staffing assumptions.

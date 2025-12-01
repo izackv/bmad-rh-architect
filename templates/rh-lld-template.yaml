@@ -1,0 +1,86 @@
+meta:
+  template_id: rh-lld-template
+  name: "Low-Level Design (LLD) – Red Hat IT Architecture"
+  version: 0.1.0
+  owner_role: "Red Hat IT Architect / Lead Engineer"
+  audience:
+    - Implementation team
+    - Platform / SRE
+    - Security reviewers
+
+sections:
+  - id: 1-intro
+    title: "1. Introduction and Scope"
+    prompt: |
+      Summarize:
+      - Link to approved HLD
+      - Scope of this LLD (what is covered / not covered)
+      - Version and change history
+
+  - id: 2-component-specs
+    title: "2. Component Specifications"
+    prompt: |
+      For each component/service:
+      - Purpose and responsibility
+      - Interfaces (APIs, message contracts)
+      - Detailed behaviour (flows, pseudo-code if needed)
+      - Dependencies and configuration
+
+  - id: 3-infra-spec
+    title: "3. Infrastructure and Platform Specification"
+    prompt: |
+      Detail:
+      - OpenShift/RHEL cluster topology (nodes, machine types, zones)
+      - Namespaces/projects, quotas, limits
+      - Operators and CRDs
+      - Storage classes, PVCs, backup and restore approach
+
+  - id: 4-networking
+    title: "4. Networking and Connectivity"
+    prompt: |
+      Specify:
+      - Cluster networking (CNI, CIDRs)
+      - Ingress/egress design (ingress controllers, routes, load balancers)
+      - Service-to-service communication (service mesh, mTLS if relevant)
+      - External connectivity (VPNs, firewalls, proxies)
+
+  - id: 5-security-detail
+    title: "5. Security and IAM Detail"
+    prompt: |
+      Document:
+      - Identity providers and user groups mapping
+      - RBAC model (namespaces, roles, role bindings)
+      - Secrets management (where stored, rotation policy)
+      - Compliance requirements (logging, audit trails)
+
+  - id: 6-deployment-pipelines
+    title: "6. CI/CD and Release Process"
+    prompt: |
+      Define:
+      - Build pipelines (stages, tools, artefacts)
+      - Deployment strategies (rolling, blue/green, canary)
+      - Promotion rules between environments
+      - Rollback strategies
+
+  - id: 7-operational-runbook
+    title: "7. Operations and Runbook"
+    prompt: |
+      Provide:
+      - Monitoring metrics and alert rules
+      - Dashboards and logs
+      - Standard operating procedures (SOP) for common incidents
+      - Maintenance tasks and schedules
+
+  - id: 8-testability
+    title: "8. Testability and Validation"
+    prompt: |
+      Describe:
+      - How to validate infra and platform configuration
+      - Non-functional testing (perf, load, failover)
+      - Security testing (vulnerability scans, hardening checks)
+
+  - id: 9-mapping-to-hld
+    title: "9. Mapping to HLD"
+    prompt: |
+      Show traceability:
+      - For each key HLD decision, show where it is implemented in LLD.

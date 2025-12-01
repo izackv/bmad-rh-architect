@@ -1,0 +1,7 @@
+name: rh-architecture-team
+description: >
+  Small virtual team focused on Red Hat–based solution architecture.
+members:
+  - id: rh-it-architect
+    role: "Lead IT Architect (Red Hat specialist)"
+    primary: true

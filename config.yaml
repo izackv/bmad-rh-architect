@@ -1,0 +1,8 @@
+name: rh-architect
+version: 0.1.0
+description: >
+  Red Hat-focused IT Architecture expansion pack for BMAD-METHOD:
+  adds a specialized IT architect persona, document templates (HLD, LLD,
+  cost/timeline/resource estimation, project plan), tasks, checklists
+  and workflows for end-to-end architecture delivery on Red Hat platforms.
+slashPrefix: rhArch

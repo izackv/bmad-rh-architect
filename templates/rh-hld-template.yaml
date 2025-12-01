@@ -1,0 +1,111 @@
+meta:
+  template_id: rh-hld-template
+  name: "High-Level Design (HLD) – Red Hat IT Architecture"
+  version: 0.1.0
+  owner_role: "Red Hat IT Architect"
+  audience:
+    - Product Owner / PM
+    - Tech Leads
+    - Platform / Infra Team
+    - Security / Compliance
+
+sections:
+  - id: 1-context
+    title: "1. Business Context and Goals"
+    prompt: |
+      Describe the business domain, key stakeholders, and high-level goals.
+      Capture:
+      - Business problem being solved
+      - Target users and usage scenarios
+      - Success criteria and KPIs
+      - Out-of-scope items and assumptions
+
+  - id: 2-requirements
+    title: "2. Requirements Summary"
+    prompt: |
+      Summarize functional and non-functional requirements at a high level:
+      - Core business capabilities
+      - Integration needs
+      - Performance, availability, resiliency
+      - Security, compliance, data residency
+      - Operational and support requirements
+
+  - id: 3-solution-overview
+    title: "3. Solution Overview"
+    prompt: |
+      Provide a narrative overview of the proposed solution:
+      - Overall concept
+      - Main subsystems and their responsibilities
+      - Deployment model (on-prem, cloud, hybrid)
+      - Major technology choices (especially Red Hat components)
+
+  - id: 4-architecture-views
+    title: "4. Architecture Views"
+    prompt: |
+      Provide key architecture views at a high level:
+      - Logical view (domains, services, data flows)
+      - Integration view (APIs, messaging, external systems)
+      - Deployment view (clusters, nodes, networks, zones)
+      - Security view (identity, access, encryption, network segmentation)
+
+  - id: 5-redhat-platform-usage
+    title: "5. Red Hat Platform Usage"
+    prompt: |
+      Explain how Red Hat technologies are used:
+      - RHEL: where and why
+      - OpenShift or Kubernetes: cluster design, tenancy, operators
+      - RH SSO/RHBK: identity and SSO patterns
+      - Ansible / AAP: automation, provisioning, configuration management
+      - Other RH components (Satellite, RHACM, etc.) if applicable
+
+  - id: 6-nonfunctional-nfr-mapping
+    title: "6. NFR Mapping"
+    prompt: |
+      Map non-functional requirements to architecture decisions:
+      - Availability and resiliency (HA, DR strategy)
+      - Scalability and performance patterns
+      - Security controls (authn/z, secrets, network, data at rest/in transit)
+      - Observability and operations (logging, metrics, tracing, alerts)
+
+  - id: 7-data-overview
+    title: "7. Data and Integration Overview"
+    prompt: |
+      At a high level:
+      - Main data entities and their lifecycles
+      - Data stores (DBs, object storage, caches)
+      - Data classification and sensitivity
+      - Integration patterns (sync/async, pub/sub, ETL/ELT)
+
+  - id: 8-environments
+    title: "8. Environments and Topology"
+    prompt: |
+      Describe planned environments:
+      - Dev, test, staging, production
+      - Differences between environments (scale, data, restrictions)
+      - Network zones, VPNs, peering, and connectivity
+
+  - id: 9-risks-assumptions
+    title: "9. Risks, Assumptions and Open Issues"
+    prompt: |
+      Document:
+      - Key risks and mitigation strategies
+      - Assumptions (business, technical, organisational)
+      - Open questions and dependencies
+
+  - id: 10-decision-log
+    title: "10. Key Architecture Decisions"
+    prompt: |
+      Provide a concise decision log:
+      - Decision title
+      - Context
+      - Options considered
+      - Choice and rationale
+      - Impact (short and long term)
+
+  - id: 11-appendices
+    title: "11. Appendices"
+    prompt: |
+      Any supporting material:
+      - Links to reference architectures
+      - Diagrams
+      - PoC results or benchmarks
