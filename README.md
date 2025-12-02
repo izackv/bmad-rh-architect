@@ -99,6 +99,49 @@ What this does:
 
 ---
 
+## Full Installation Example
+
+Here's a complete example showing how to set up BMAD and install this pack
+into a new project from scratch:
+
+### Step 1: Install BMAD core into a new project
+
+```bash
+# Create a new project directory
+mkdir -p ~/Data/projects/arch/rh-test01
+folder_full_name=$(ls -d $_)
+echo $folder_full_name
+
+# Install BMAD core
+npx bmad-method install
+```
+
+When prompted:
+- **Target directory:** `/Users/[your-user]/Data/projects/arch/rh-test01`
+- **Core type:** Choose `core`
+- **Other options:** Accept all defaults
+- **IDE:** Choose `Cursor` 
+
+### Step 2: Install the bmad-rh-architect pack
+
+```bash
+# Clone this pack into a temporary directory
+mkdir temp && cd "$_"
+git clone https://github.com/izackv/bmad-rh-architect.git
+cd bmad-rh-architect
+
+# Install the pack installer tool
+python3 -m pip install --user bmad-pack-installer
+
+# Deploy the pack into your BMAD project
+./install.sh ~/Data/projects/arch/rh-test01
+```
+
+After these steps, you can open your project directory (`~/Data/projects/arch/rh-test01`)
+in your IDE and start using the `/rhArch` commands.
+
+---
+
 ## Usage
 
 Once the pack is deployed into your BMAD-enabled project, open that project
