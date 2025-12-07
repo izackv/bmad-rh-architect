@@ -64,6 +64,8 @@ mkdir -p ~/projects/my-arch-project
 cd ~/projects/my-arch-project
 
 # Install BMAD core (select Cursor or Claude Code when prompted)
+# When prompted for target directory, copy the output of pwd
+pwd
 npx bmad-method install
 
 # Clone and install this expansion pack

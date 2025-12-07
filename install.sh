@@ -31,6 +31,20 @@ fi
 # ============================================================
 # Step 1: Validate target directory exists
 # ============================================================
+
+# Convert relative path to absolute path
+if [[ "$TARGET_PROJECT_DIR" != /* ]]; then
+  # Save current directory, go to parent to resolve relative path
+  ORIG_DIR="$(pwd)"
+  cd "$(dirname "$0")/.." 2>/dev/null || cd "$ORIG_DIR"
+  if [ -d "$TARGET_PROJECT_DIR" ]; then
+    TARGET_PROJECT_DIR="$(cd "$TARGET_PROJECT_DIR" && pwd)"
+  elif [ -d "$ORIG_DIR/$TARGET_PROJECT_DIR" ]; then
+    TARGET_PROJECT_DIR="$(cd "$ORIG_DIR/$TARGET_PROJECT_DIR" && pwd)"
+  fi
+  cd "$ORIG_DIR"
+fi
+
 if [ ! -d "$TARGET_PROJECT_DIR" ]; then
   echo "[ERROR] Target directory '$TARGET_PROJECT_DIR' does not exist."
   echo ""
@@ -56,6 +70,7 @@ if [ "$BMAD_FOUND" = false ] && [ "$FORCE_INSTALL" = false ]; then
   echo ""
   echo "To install BMAD, run:"
   echo "  cd $TARGET_PROJECT_DIR"
+  echo "  pwd  # Copy this path when prompted for target directory"
   echo "  npx bmad-method install"
   echo ""
   echo "Then run this installer again:"
