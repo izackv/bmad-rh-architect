@@ -1,7 +1,56 @@
 name: rh-architecture-team
 description: >
-  Small virtual team focused on Red Hat–based solution architecture.
+  Virtual team focused on Red Hat enterprise solutions covering
+  architecture design, troubleshooting, and DevOps automation.
+
 members:
   - id: rh-it-architect
     role: "Lead IT Architect (Red Hat specialist)"
+    agent_file: "agents/rh-it-architect.md"
     primary: true
+    capabilities:
+      - Solution architecture design
+      - HLD and LLD creation
+      - Cost and timeline estimation
+      - Project planning
+
+  - id: rh-support
+    role: "Senior Support Engineer"
+    agent_file: "agents/rh-support.md"
+    primary: false
+    capabilities:
+      - Issue analysis and troubleshooting
+      - sos-report analysis
+      - Environment discovery
+      - Documentation search
+
+  - id: rh-devops
+    role: "Senior DevOps Engineer"
+    agent_file: "agents/rh-devops.md"
+    primary: false
+    capabilities:
+      - Ansible playbook creation
+      - Kubernetes/OpenShift manifests
+      - Grafana dashboard creation
+      - CI/CD pipeline development
+
+collaboration:
+  description: |
+    The team works together to deliver complete Red Hat solutions:
+
+    1. RH IT Architect leads design and planning
+    2. RH DevOps implements automation and configuration
+    3. RH Support handles troubleshooting and validation
+
+  handoffs:
+    - from: rh-it-architect
+      to: rh-devops
+      trigger: "After HLD/LLD approval, for implementation automation"
+
+    - from: rh-devops
+      to: rh-support
+      trigger: "When deployment issues arise"
+
+    - from: rh-support
+      to: rh-it-architect
+      trigger: "When architectural changes are needed"

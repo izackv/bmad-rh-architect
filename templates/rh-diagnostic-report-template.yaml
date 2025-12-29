@@ -1,0 +1,121 @@
+meta:
+  template_id: rh-diagnostic-report-template
+  name: "Diagnostic Report – Red Hat Systems"
+  version: 0.1.0
+  owner_role: "Red Hat Support Engineer"
+  audience:
+    - System Administrators
+    - SRE / Operations
+    - Support Engineers
+
+sections:
+  - id: 1-summary
+    title: "1. Executive Summary"
+    prompt: |
+      Provide a brief overview of the diagnostic results:
+      - Overall system health status (HEALTHY/WARNING/CRITICAL)
+      - Key findings and concerns
+      - Immediate actions required (if any)
+
+  - id: 2-system-info
+    title: "2. System Information"
+    prompt: |
+      Document system identification and context:
+      - Hostname and FQDN
+      - Operating system and version
+      - Kernel version
+      - Hardware summary (CPU, memory, storage)
+      - Uptime and last reboot
+      - System role/purpose
+
+  - id: 3-resource-status
+    title: "3. Resource Status"
+    prompt: |
+      Assess resource utilization and capacity:
+      - CPU: Load average, utilization, bottlenecks
+      - Memory: Total, used, available, swap usage
+      - Disk: Filesystem usage, inode usage, I/O metrics
+      - Network: Interface status, throughput, errors
+
+      Use status indicators: OK (green), WARNING (yellow), CRITICAL (red)
+      Include thresholds used for each assessment.
+
+  - id: 4-service-health
+    title: "4. Service Health"
+    prompt: |
+      Document service status:
+      - List of critical services and their status
+      - Failed or degraded services
+      - Services with recent restarts
+      - Dependency issues
+
+      Categorize by: Running, Stopped (expected), Failed, Degraded
+
+  - id: 5-security-posture
+    title: "5. Security Assessment"
+    prompt: |
+      Evaluate security configuration:
+      - SELinux status and recent denials
+      - Firewall status and rule summary
+      - Authentication configuration
+      - Pending security updates
+      - Certificate status (if applicable)
+      - Compliance considerations
+
+  - id: 6-log-analysis
+    title: "6. Log Analysis"
+    prompt: |
+      Summarize findings from log review:
+      - Error patterns detected
+      - Warning trends
+      - Authentication failures
+      - Service failures
+      - Notable events in timeframe
+
+      Include relevant log excerpts with timestamps.
+
+  - id: 7-cluster-status
+    title: "7. Cluster Status (if applicable)"
+    prompt: |
+      For cluster nodes, assess:
+      - Cluster membership and role
+      - Node conditions
+      - Control plane health (if control plane node)
+      - Workload summary
+      - Operator status
+      - Recent cluster events
+
+  - id: 8-issues-found
+    title: "8. Issues Found"
+    prompt: |
+      List all issues discovered, categorized by severity:
+
+      CRITICAL (requires immediate attention):
+      - [Issue, evidence, impact]
+
+      WARNING (should address soon):
+      - [Issue, evidence, impact]
+
+      INFORMATIONAL (for awareness):
+      - [Issue, evidence, impact]
+
+  - id: 9-recommendations
+    title: "9. Recommendations"
+    prompt: |
+      Provide prioritized recommendations:
+
+      For each recommendation include:
+      - Priority (P1/P2/P3)
+      - Action to take
+      - Rationale
+      - Effort estimate (Low/Medium/High)
+      - Risk if not addressed
+
+  - id: 10-appendix
+    title: "10. Appendix"
+    prompt: |
+      Include supporting information:
+      - Commands used for diagnostics
+      - Full output of key commands
+      - Configuration file excerpts
+      - Reference links to documentation

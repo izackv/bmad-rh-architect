@@ -1,0 +1,194 @@
+meta:
+  template_id: rh-environment-discovery-template
+  name: "Environment Discovery Report – Red Hat Systems"
+  version: 0.1.0
+  owner_role: "Red Hat Support Engineer"
+  audience:
+    - System Administrators
+    - IT Architects
+    - Operations Teams
+
+sections:
+  - id: 1-overview
+    title: "1. Discovery Overview"
+    prompt: |
+      Provide discovery context:
+      - Discovery date and source (sos-report, live system)
+      - System type identified (standalone, cluster node, etc.)
+      - Scope of discovery
+      - Any limitations or missing data
+
+  - id: 2-hardware
+    title: "2. Hardware Inventory"
+    prompt: |
+      Document hardware specifications:
+      - System manufacturer and model
+      - CPU: Model, cores, sockets, architecture
+      - Memory: Total RAM, DIMM configuration
+      - Storage: Controllers, devices, total capacity
+      - Network: Interfaces, speeds, capabilities
+      - Other: GPU, special hardware
+
+  - id: 3-os
+    title: "3. Operating System"
+    prompt: |
+      Document OS configuration:
+      - Distribution and version (RHEL X.Y)
+      - Kernel version and parameters
+      - Hostname and domain
+      - Timezone and locale
+      - Boot configuration
+      - Subscription status
+
+  - id: 4-network
+    title: "4. Network Configuration"
+    prompt: |
+      Document network setup:
+
+      Interfaces:
+      - Name, type, MAC, IP address, netmask
+      - Bonding/teaming configuration
+      - VLAN configuration
+
+      Routing:
+      - Default gateway
+      - Static routes
+      - Routing tables
+
+      DNS:
+      - Nameservers
+      - Search domains
+      - Local hosts entries
+
+      Network services:
+      - Firewall zones and rules summary
+      - Network-related services
+
+  - id: 5-storage
+    title: "5. Storage Configuration"
+    prompt: |
+      Document storage layout:
+
+      Physical devices:
+      - Block devices and sizes
+      - Multipath configuration (if applicable)
+
+      Logical volumes (if LVM):
+      - Volume groups
+      - Logical volumes
+      - Physical volumes
+
+      Filesystems:
+      - Mount points, devices, types
+      - Mount options
+      - Capacity and usage
+
+      Special storage:
+      - NFS mounts
+      - iSCSI targets
+      - Persistent volumes (for containers)
+
+  - id: 6-software
+    title: "6. Installed Software"
+    prompt: |
+      Document installed software:
+
+      Red Hat products:
+      - Product name, version, subscription status
+
+      Key packages:
+      - Core system packages
+      - Development tools
+      - Monitoring agents
+
+      Repositories:
+      - Enabled repositories
+      - Third-party repositories
+
+      Container runtime (if applicable):
+      - Podman/Docker version
+      - Container images
+
+  - id: 7-services
+    title: "7. Services Inventory"
+    prompt: |
+      Document services:
+
+      System services:
+      - Essential services (sshd, chronyd, etc.)
+      - Status and enabled state
+
+      Application services:
+      - Red Hat product services
+      - Custom application services
+
+      Scheduled tasks:
+      - Cron jobs
+      - Systemd timers
+
+  - id: 8-security
+    title: "8. Security Configuration"
+    prompt: |
+      Document security settings:
+
+      SELinux:
+      - Mode and policy
+      - Custom modules
+
+      Firewall:
+      - Active zones
+      - Key rules and services
+
+      Authentication:
+      - Local users
+      - Directory integration (LDAP, IdM, AD)
+      - SSSD configuration
+      - PAM configuration
+
+      Certificates:
+      - System certificates
+      - Application certificates
+      - Expiration dates
+
+  - id: 9-cluster
+    title: "9. Cluster Context (if applicable)"
+    prompt: |
+      For cluster members, document:
+
+      Cluster membership:
+      - Cluster name and type
+      - Node role (control plane, worker, infra)
+      - Cluster version
+
+      Node configuration:
+      - Labels and annotations
+      - Taints and tolerations
+      - Resource capacity
+
+      Workloads:
+      - Pods running on node
+      - Resource allocation
+
+      Operators:
+      - Installed operators
+      - Operator status
+
+  - id: 10-diagram
+    title: "10. Architecture Diagram"
+    prompt: |
+      Provide visual representation:
+      - System context diagram
+      - Network topology
+      - Storage layout
+      - Cluster position (if applicable)
+
+      Use ASCII art or Mermaid diagram syntax.
+
+  - id: 11-notes
+    title: "11. Observations and Notes"
+    prompt: |
+      Document additional observations:
+      - Unusual configurations
+      - Potential issues noted
+      - Recommendations for follow-up
+      - Missing information to gather

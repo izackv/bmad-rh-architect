@@ -1,0 +1,257 @@
+meta:
+  template_id: rh-k8s-manifest-template
+  name: "Kubernetes/OpenShift Manifest Template"
+  version: 0.1.0
+  owner_role: "Red Hat DevOps Engineer"
+  audience:
+    - DevOps Engineers
+    - Platform Engineers
+    - Developers
+
+structure:
+  description: |
+    Standard templates for Kubernetes/OpenShift manifests following
+    cloud-native best practices.
+
+sections:
+  - id: deployment
+    title: "Deployment"
+    prompt: |
+      Create Deployment manifest with:
+      - Standard labels (app.kubernetes.io/*)
+      - Resource requests and limits
+      - Liveness and readiness probes
+      - Security context
+      - Pod anti-affinity for HA
+
+    template: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: ${APP_NAME}
+        namespace: ${NAMESPACE}
+        labels:
+          app.kubernetes.io/name: ${APP_NAME}
+          app.kubernetes.io/instance: ${INSTANCE}
+          app.kubernetes.io/version: "${VERSION}"
+          app.kubernetes.io/component: ${COMPONENT}
+          app.kubernetes.io/part-of: ${PART_OF}
+          app.kubernetes.io/managed-by: ${MANAGED_BY}
+      spec:
+        replicas: ${REPLICAS}
+        strategy:
+          type: RollingUpdate
+          rollingUpdate:
+            maxSurge: 1
+            maxUnavailable: 0
+        selector:
+          matchLabels:
+            app.kubernetes.io/name: ${APP_NAME}
+            app.kubernetes.io/instance: ${INSTANCE}
+        template:
+          metadata:
+            labels:
+              app.kubernetes.io/name: ${APP_NAME}
+              app.kubernetes.io/instance: ${INSTANCE}
+          spec:
+            serviceAccountName: ${SERVICE_ACCOUNT}
+            securityContext:
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+            containers:
+              - name: ${CONTAINER_NAME}
+                image: ${IMAGE}:${TAG}
+                imagePullPolicy: IfNotPresent
+                ports:
+                  - name: http
+                    containerPort: ${PORT}
+                    protocol: TCP
+                resources:
+                  requests:
+                    memory: "${MEM_REQUEST}"
+                    cpu: "${CPU_REQUEST}"
+                  limits:
+                    memory: "${MEM_LIMIT}"
+                    cpu: "${CPU_LIMIT}"
+                livenessProbe:
+                  httpGet:
+                    path: /health/live
+                    port: http
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+                readinessProbe:
+                  httpGet:
+                    path: /health/ready
+                    port: http
+                  initialDelaySeconds: 5
+                  periodSeconds: 5
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    drop:
+                      - ALL
+                  readOnlyRootFilesystem: true
+
+  - id: service
+    title: "Service"
+    prompt: |
+      Create Service manifest with:
+      - Matching selectors
+      - Named ports
+      - Appropriate service type
+
+    template: |
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: ${APP_NAME}
+        namespace: ${NAMESPACE}
+        labels:
+          app.kubernetes.io/name: ${APP_NAME}
+      spec:
+        type: ClusterIP
+        ports:
+          - name: http
+            port: 80
+            targetPort: http
+            protocol: TCP
+        selector:
+          app.kubernetes.io/name: ${APP_NAME}
+          app.kubernetes.io/instance: ${INSTANCE}
+
+  - id: route
+    title: "Route (OpenShift)"
+    prompt: |
+      Create Route manifest with:
+      - TLS configuration
+      - Host specification
+
+    template: |
+      apiVersion: route.openshift.io/v1
+      kind: Route
+      metadata:
+        name: ${APP_NAME}
+        namespace: ${NAMESPACE}
+        labels:
+          app.kubernetes.io/name: ${APP_NAME}
+      spec:
+        host: ${HOSTNAME}
+        to:
+          kind: Service
+          name: ${APP_NAME}
+          weight: 100
+        port:
+          targetPort: http
+        tls:
+          termination: edge
+          insecureEdgeTerminationPolicy: Redirect
+
+  - id: configmap
+    title: "ConfigMap"
+    prompt: |
+      Create ConfigMap for non-sensitive configuration:
+
+    template: |
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: ${APP_NAME}-config
+        namespace: ${NAMESPACE}
+        labels:
+          app.kubernetes.io/name: ${APP_NAME}
+      data:
+        config.yaml: |
+          # Application configuration
+          key: value
+
+  - id: secret
+    title: "Secret (Template)"
+    prompt: |
+      Create Secret template (values should be populated externally):
+
+    template: |
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: ${APP_NAME}-secret
+        namespace: ${NAMESPACE}
+        labels:
+          app.kubernetes.io/name: ${APP_NAME}
+      type: Opaque
+      stringData:
+        # DO NOT commit real secrets - use external secrets management
+        key: "PLACEHOLDER"
+
+  - id: pvc
+    title: "PersistentVolumeClaim"
+    prompt: |
+      Create PVC for persistent storage:
+
+    template: |
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: ${APP_NAME}-data
+        namespace: ${NAMESPACE}
+        labels:
+          app.kubernetes.io/name: ${APP_NAME}
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: ${STORAGE_SIZE}
+        storageClassName: ${STORAGE_CLASS}
+
+  - id: networkpolicy
+    title: "NetworkPolicy"
+    prompt: |
+      Create NetworkPolicy for network segmentation:
+
+    template: |
+      apiVersion: networking.k8s.io/v1
+      kind: NetworkPolicy
+      metadata:
+        name: ${APP_NAME}-policy
+        namespace: ${NAMESPACE}
+      spec:
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/name: ${APP_NAME}
+        policyTypes:
+          - Ingress
+          - Egress
+        ingress:
+          - from:
+              - namespaceSelector:
+                  matchLabels:
+                    name: ${ALLOWED_NAMESPACE}
+            ports:
+              - protocol: TCP
+                port: ${PORT}
+        egress:
+          - to:
+              - namespaceSelector: {}
+            ports:
+              - protocol: TCP
+                port: 443
+
+labels:
+  recommended:
+    - app.kubernetes.io/name: "Application name"
+    - app.kubernetes.io/instance: "Instance identifier"
+    - app.kubernetes.io/version: "Application version"
+    - app.kubernetes.io/component: "Component type (frontend, backend, database)"
+    - app.kubernetes.io/part-of: "Parent application"
+    - app.kubernetes.io/managed-by: "Management tool"
+
+best_practices:
+  - Always specify resource requests and limits
+  - Include liveness and readiness probes
+  - Use security contexts (non-root, drop capabilities)
+  - Apply network policies for segmentation
+  - Never include secrets in manifests
+  - Use standard Kubernetes labels
+  - Implement pod anti-affinity for HA
+  - Use rolling update strategy

@@ -1,0 +1,190 @@
+meta:
+  template_id: rh-grafana-dashboard-template
+  name: "Grafana Dashboard Template – Red Hat Monitoring"
+  version: 0.1.0
+  owner_role: "Red Hat DevOps Engineer"
+  audience:
+    - Operations Teams
+    - SRE
+    - DevOps Engineers
+
+structure:
+  description: |
+    Standard structure for Grafana dashboards monitoring Red Hat products.
+
+  dashboard_skeleton: |
+    {
+      "dashboard": {
+        "id": null,
+        "uid": null,
+        "title": "[Dashboard Title]",
+        "description": "[Dashboard description]",
+        "tags": ["red-hat", "[product]"],
+        "timezone": "browser",
+        "schemaVersion": 38,
+        "version": 1,
+        "refresh": "30s",
+        "time": {
+          "from": "now-6h",
+          "to": "now"
+        },
+        "templating": { "list": [] },
+        "annotations": { "list": [] },
+        "panels": [],
+        "editable": true,
+        "fiscalYearStartMonth": 0,
+        "graphTooltip": 0,
+        "links": [],
+        "liveNow": false
+      }
+    }
+
+sections:
+  - id: metadata
+    title: "1. Dashboard Metadata"
+    prompt: |
+      Define dashboard metadata:
+      - Title: Clear, descriptive name
+      - Description: Purpose and scope
+      - Tags: For organization (product, team, environment)
+      - Refresh interval: Based on metric update frequency
+
+  - id: variables
+    title: "2. Template Variables"
+    prompt: |
+      Define template variables for filtering:
+      - datasource: Allow datasource selection
+      - instance/host: Filter by target
+      - namespace: Filter by namespace (K8s)
+      - interval: Aggregation interval
+
+      Example variable:
+      {
+        "name": "instance",
+        "type": "query",
+        "datasource": "${datasource}",
+        "query": "label_values(up, instance)",
+        "refresh": 1,
+        "includeAll": true,
+        "multi": true
+      }
+
+  - id: overview-row
+    title: "3. Overview Row"
+    prompt: |
+      First row with high-level metrics:
+      - Stat panels for key indicators
+      - Gauges for utilization percentages
+      - Status indicators (up/down)
+
+      Panel types: stat, gauge, bargauge
+
+  - id: timeseries-row
+    title: "4. Time Series Row"
+    prompt: |
+      Time series graphs for trends:
+      - CPU usage over time
+      - Memory usage over time
+      - Network traffic
+      - Request rates
+
+      Panel type: timeseries
+
+  - id: detail-row
+    title: "5. Detail Row"
+    prompt: |
+      Detailed breakdowns:
+      - Tables for resource lists
+      - Heatmaps for distributions
+      - Pie charts for composition
+
+      Panel types: table, heatmap, piechart
+
+  - id: alerts-row
+    title: "6. Alerts Row"
+    prompt: |
+      Alert-related panels:
+      - Alert list
+      - Alert state timeline
+      - Notification history
+
+      Panel type: alertlist, state-timeline
+
+panel_types:
+  stat:
+    description: "Single value display"
+    use_for: "KPIs, counts, percentages"
+    example: |
+      {
+        "type": "stat",
+        "title": "CPU Usage",
+        "targets": [{"expr": "avg(cpu_usage_percent)"}],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 70},
+                {"color": "red", "value": 90}
+              ]
+            }
+          }
+        }
+      }
+
+  timeseries:
+    description: "Time series graph"
+    use_for: "Trends, historical data"
+    example: |
+      {
+        "type": "timeseries",
+        "title": "CPU Over Time",
+        "targets": [{"expr": "cpu_usage_percent", "legendFormat": "{{instance}}"}],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "custom": {
+              "lineWidth": 1,
+              "fillOpacity": 10
+            }
+          }
+        }
+      }
+
+  table:
+    description: "Tabular data"
+    use_for: "Lists, detailed breakdowns"
+    example: |
+      {
+        "type": "table",
+        "title": "Pod Status",
+        "targets": [{"expr": "kube_pod_info", "format": "table", "instant": true}],
+        "transformations": [
+          {"id": "organize", "options": {"excludeByName": {}, "indexByName": {}}}
+        ]
+      }
+
+common_queries:
+  rhel:
+    cpu: '100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)'
+    memory: '(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100'
+    disk: '(1 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})) * 100'
+    network_rx: 'rate(node_network_receive_bytes_total[5m])'
+    network_tx: 'rate(node_network_transmit_bytes_total[5m])'
+
+  openshift:
+    cluster_cpu: 'sum(rate(container_cpu_usage_seconds_total[5m]))'
+    cluster_memory: 'sum(container_memory_working_set_bytes)'
+    pod_count: 'count(kube_pod_info)'
+    node_count: 'count(kube_node_info)'
+
+best_practices:
+  - Use consistent color schemes
+  - Include meaningful thresholds
+  - Add descriptions to panels
+  - Use variables for flexibility
+  - Group related panels in rows
+  - Include refresh interval
+  - Test with actual data
+  - Document data sources

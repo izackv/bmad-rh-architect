@@ -1,0 +1,157 @@
+meta:
+  template_id: rh-ansible-playbook-template
+  name: "Ansible Playbook Template – Red Hat"
+  version: 0.1.0
+  owner_role: "Red Hat DevOps Engineer"
+  audience:
+    - DevOps Engineers
+    - System Administrators
+    - Platform Engineers
+
+structure:
+  description: |
+    Standard structure for Ansible playbooks following Red Hat best practices.
+
+  simple_playbook: |
+    ---
+    # Playbook: [name]
+    # Purpose: [description]
+    # Author: [author]
+    # Version: [version]
+    #
+    # Usage:
+    #   ansible-playbook [playbook].yml -i inventory [options]
+    #
+    # Requirements:
+    #   - Ansible [version]+
+    #   - Collections: [list]
+
+    - name: [Play description]
+      hosts: "{{ target_hosts | default('all') }}"
+      become: [true/false]
+      gather_facts: [true/false]
+
+      vars:
+        # Define variables with defaults
+        var_name: "default_value"
+
+      pre_tasks:
+        # Tasks to run before main tasks
+        - name: Validate prerequisites
+          ansible.builtin.assert:
+            that:
+              - condition
+            fail_msg: "Error message"
+
+      tasks:
+        # Main tasks
+        - name: Task description
+          ansible.builtin.module:
+            param: value
+          register: result
+          tags: [tag]
+
+      handlers:
+        # Handlers for notifications
+        - name: Handler name
+          ansible.builtin.service:
+            name: service
+            state: restarted
+
+      post_tasks:
+        # Tasks to run after main tasks
+        - name: Verify completion
+          ansible.builtin.debug:
+            msg: "Completed successfully"
+
+  role_structure: |
+    role_name/
+    ├── defaults/
+    │   └── main.yml          # Default variables (lowest priority)
+    ├── vars/
+    │   └── main.yml          # Role variables (high priority)
+    ├── tasks/
+    │   └── main.yml          # Main task list
+    ├── handlers/
+    │   └── main.yml          # Handlers
+    ├── templates/
+    │   └── template.j2       # Jinja2 templates
+    ├── files/
+    │   └── file.txt          # Static files
+    ├── meta/
+    │   └── main.yml          # Role metadata and dependencies
+    └── README.md             # Role documentation
+
+sections:
+  - id: header
+    title: "Header"
+    prompt: |
+      Include standard header with:
+      - Playbook name and purpose
+      - Author and version
+      - Usage instructions
+      - Requirements (Ansible version, collections)
+
+  - id: play-definition
+    title: "Play Definition"
+    prompt: |
+      Define the play with:
+      - Descriptive name
+      - Target hosts (use variable for flexibility)
+      - Privilege escalation (become)
+      - Fact gathering setting
+
+  - id: variables
+    title: "Variables"
+    prompt: |
+      Define variables:
+      - Group all related variables
+      - Provide sensible defaults
+      - Document each variable's purpose
+      - Use descriptive names
+
+  - id: pre-tasks
+    title: "Pre-tasks"
+    prompt: |
+      Include pre-tasks for:
+      - Prerequisite validation
+      - Environment checks
+      - Dependency verification
+
+  - id: tasks
+    title: "Tasks"
+    prompt: |
+      Main tasks should:
+      - Have descriptive names
+      - Use FQCN (fully qualified collection names)
+      - Include tags for selective execution
+      - Register results when needed
+      - Handle errors appropriately
+
+  - id: handlers
+    title: "Handlers"
+    prompt: |
+      Define handlers for:
+      - Service restarts
+      - Configuration reloads
+      - Cleanup operations
+
+  - id: post-tasks
+    title: "Post-tasks"
+    prompt: |
+      Include post-tasks for:
+      - Verification
+      - Cleanup
+      - Reporting
+
+best_practices:
+  - Use FQCN for all modules (ansible.builtin.*, community.*, etc.)
+  - Name all tasks descriptively
+  - Use tags for selective execution
+  - Handle errors with block/rescue/always
+  - Use handlers for service restarts
+  - Keep tasks idempotent
+  - Validate input with assert
+  - Use variables for flexibility
+  - Document with comments
+  - Test with molecule

@@ -1,0 +1,137 @@
+meta:
+  template_id: rh-issue-analysis-template
+  name: "Issue Analysis Report – Red Hat Support"
+  version: 0.1.0
+  owner_role: "Red Hat Support Engineer"
+  audience:
+    - System Administrators
+    - Support Engineers
+    - Development Teams
+
+sections:
+  - id: 1-problem-statement
+    title: "1. Problem Statement"
+    prompt: |
+      Clearly define the issue:
+      - Brief description of the problem
+      - Expected behavior
+      - Actual behavior
+      - Business impact and severity
+      - Affected systems/services
+
+  - id: 2-environment
+    title: "2. Environment Details"
+    prompt: |
+      Document the affected environment:
+      - Product name and version
+      - Operating system version
+      - Hardware/platform (bare metal, VM, cloud, container)
+      - Cluster details (if applicable)
+      - Recent changes or updates
+
+  - id: 3-timeline
+    title: "3. Issue Timeline"
+    prompt: |
+      Establish timeline:
+      - When issue first observed
+      - Frequency (constant, intermittent, scheduled)
+      - Any pattern correlation (time, load, user action)
+      - Duration of occurrences
+      - Recent changes before issue started
+
+  - id: 4-symptoms
+    title: "4. Symptoms and Evidence"
+    prompt: |
+      Document observable symptoms:
+      - Error messages (exact text)
+      - Error codes
+      - Log entries
+      - Metrics anomalies
+      - User reports
+
+      Include relevant excerpts and screenshots.
+
+  - id: 5-investigation
+    title: "5. Investigation Steps"
+    prompt: |
+      Document investigation performed:
+
+      For each step:
+      - Action taken
+      - Command/tool used
+      - Result/output
+      - Conclusion
+
+      Include both successful and unsuccessful attempts.
+
+  - id: 6-hypotheses
+    title: "6. Hypotheses Considered"
+    prompt: |
+      List root cause hypotheses:
+
+      For each hypothesis:
+      - Description
+      - Supporting evidence
+      - Contradicting evidence
+      - Verification method
+      - Result (Confirmed/Eliminated/Inconclusive)
+
+      Order by likelihood and investigation order.
+
+  - id: 7-root-cause
+    title: "7. Root Cause Analysis"
+    prompt: |
+      Document identified root cause:
+      - Root cause description
+      - Causal chain (how it led to symptoms)
+      - Evidence supporting this conclusion
+      - Why other causes were ruled out
+
+      If root cause unknown:
+      - Most likely cause
+      - What additional information needed
+      - Recommended next steps
+
+  - id: 8-resolution
+    title: "8. Resolution"
+    prompt: |
+      Document the solution:
+
+      Immediate fix:
+      - Steps taken to resolve
+      - Commands executed
+      - Configuration changes
+      - Verification that issue is resolved
+
+      Rollback plan:
+      - How to revert if fix causes issues
+      - Backup/restore procedures
+
+  - id: 9-prevention
+    title: "9. Prevention"
+    prompt: |
+      Recommend preventive measures:
+      - Configuration changes to prevent recurrence
+      - Monitoring/alerting to detect early
+      - Process improvements
+      - Documentation updates
+      - Training needs
+
+  - id: 10-references
+    title: "10. References"
+    prompt: |
+      List reference materials:
+      - Knowledge base articles consulted
+      - Documentation links
+      - Bug reports (Bugzilla, Jira)
+      - Vendor case numbers
+      - Related incidents
+
+  - id: 11-lessons-learned
+    title: "11. Lessons Learned"
+    prompt: |
+      Capture knowledge gained:
+      - What worked well in investigation
+      - What could be improved
+      - Knowledge to share with team
+      - Process improvements identified
